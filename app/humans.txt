@@ -3,7 +3,7 @@
 
 # TEAM
 
-  <name> -- <role> -- <twitter>
+  <Binoy Patel> -- <Developer> -- <binoypatel14>
 
 # THANKS
 
@@ -11,4 +11,4 @@
 
 # TECHNOLOGY COLOPHON
 
-  HTML5, CSS3
+  HTML5, CSS3, JAVASCRIPT
