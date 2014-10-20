@@ -40,15 +40,6 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-// Lint JavaScript
-gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
-    .pipe(reload({stream: true, once: true}))
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
-});
-
 // Optimize Images
 gulp.task('images', function () {
   return gulp.src('app/images/**/*')
@@ -81,25 +72,19 @@ gulp.task('fonts', function () {
 
 // Compile and Automatically Prefix Stylesheets
 gulp.task('styles', function () {
-  // For best performance, don't add Sass partials to `gulp.src`
-  return gulp.src([
-      'app/styles/*.scss',
-      'app/styles/**/*.css',
-      'app/styles/components/components.scss'
-    ])
-    .pipe($.changed('styles', {extension: '.scss'}))
-    .pipe($.rubySass({
-        style: 'expanded',
-        precision: 10
-      })
-      .on('error', console.error.bind(console))
-    )
+  return gulp.src('app/styles/*.css')    
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
     .pipe(gulp.dest('dist/styles'))
     .pipe($.size({title: 'styles'}));
+});
+
+gulp.task('scripts', function(){
+  return gulp.src('app/scripts/*.js')
+  .pipe($.uglify())
+  .pipe(gulp.dest('dist/scripts/'));
 });
 
 // Scan Your HTML For Assets & Optimize Them
@@ -172,7 +157,7 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+  runSequence('styles', 'scripts', ['html', 'images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
