@@ -470,3 +470,8 @@ footer .footer-below {
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     color : #8b0006;
 }
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open>.dropdown-toggle.btn-success {
+    background-color: #1174e6;
+    border-color:  #1174e6;
+}
